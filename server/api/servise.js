@@ -8,7 +8,14 @@ export async function postLauncher(req, res) {
         res.status(400)
         res.json({ "false": "missing infprmation" })
     }
-    if (!isTypes({ "city": "", "roketType": "", "latitude": 1, "longitude": 1, "name": "" }, body)) {
+    try{
+        body.latitude = Number(body.latitude)
+        body.longitude = Number(body.longitude)
+    }catch{
+        res.status(400)
+        res.json({ "false": "one or more types not good" })
+    }
+    if (!isTypes({ "city": "", "roketType": "", "latitude": 0, "longitude": 0, "name": "" }, body)) {
         res.status(400)
         res.json({ "false": "one or more types not good" })
     }

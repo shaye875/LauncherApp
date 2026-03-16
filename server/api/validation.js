@@ -32,7 +32,6 @@ export function isTypes(obyTypes,obj){
 
 export function schema(obj){
     for(let key in obj){
-        console.log(key,obj[key].size);
         if(Number(key) === obj[key].size){
             return true
         }
