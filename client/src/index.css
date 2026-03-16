@@ -1,0 +1,9 @@
+:root {
+  --sans: system-ui, sans-seri;
+  font: 18px/145% var(--sans);
+}
+*{
+  padding: 0;
+  margin: 0;
+}
+
