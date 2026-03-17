@@ -1,9 +1,9 @@
 import JWT from 'jsonwebtoken'
 import 'dotenv/config'
 
-export function getToken(usename, password, userType) {
+export function getToken(username, password, userType) {
     const token = JWT.sign({
-        usename: usename,
+        username: username,
         password: password,
         userType: userType
     },

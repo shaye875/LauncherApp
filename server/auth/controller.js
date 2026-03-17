@@ -1,12 +1,10 @@
 import express from 'express'
-import { deleteById, getAll, getById, postLauncher } from './servise.js'
+import {  getUser, login } from './servise.js'
+import { checBasicUser } from '../utils/middelelware.js'
 
-export const api = express()
+export const auth = express()
 
-api.post("",postLauncher)
+auth.post("/login",login)
 
-api.get("",getAll)
+auth.get("/getUser",checBasicUser,getUser)
 
-api.get("/:id",getById)
-
-api.delete("/:id",deleteById)

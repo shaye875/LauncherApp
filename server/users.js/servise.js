@@ -1,5 +1,5 @@
 import { isInformation, isTypes, schema } from "../utils/validation.js"
-import { insert, removeById, updateOne } from "./qweries.js"
+import { getAll, insert, removeById, updateOne } from "./qweries.js"
 
 
 export async function create(req, res) {
@@ -17,6 +17,13 @@ export async function create(req, res) {
         return res.json({ "false": "userType must bu airports,intellagens,admin" })
     }
     body["lastLogin"] = new Date()
+    const arr = await getAll()
+    for(let user of arr){
+        if(user.userType === body.userType){
+            res.status(409)
+            return res.json({"false":"user type alredui exist"})
+        }
+    }
     const result = await insert(body)
     if (result.acknowledged) {
         res.status(200)
@@ -62,4 +69,10 @@ export async function deleteUser(req, res) {
         res.status(404)
         res.json({ "false": "not found" })
     }
+}
+
+export async function get(req,res){
+    const arr = await getAll()
+    res.status(200)
+    res.json(arr)
 }
