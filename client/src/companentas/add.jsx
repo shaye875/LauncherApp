@@ -11,7 +11,7 @@ function Add() {
     async function postLauncher() {
         const res = await fetch("http://localhost:3000/api/launchers", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json",token:localStorage.getItem("token") },
             body: JSON.stringify({
                 "city": city,
                 "roketType": rocketType.value,

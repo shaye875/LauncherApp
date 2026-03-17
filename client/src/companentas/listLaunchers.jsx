@@ -1,16 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import { useLaunchers } from '../zustand/store'
 import Select from 'react-select'
-import { Navigate, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 
 function ListLaunchers() {
     const negativ = useNavigate()
     const [city,setCity] = useState("")
     const [rocketType,setRooketType] = useState({label:"all",value:"all"})
     const {launchers,fetchLounchers} = useLaunchers()
+    const [ bool,setBool] = useState(false)
+    async function update(id){
+      try{
+          const res = await fetch(`http://localhost:3000/api/launchers/${id}`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json",token:localStorage.getItem("token") },
+              body: JSON.stringify({
+                bool:bool
+              })
+          })
+      }catch(err){
+          throw new Error(err)
+      }
+  }
     useEffect(()=>{
         fetchLounchers()  
-    },[])
+    },[update])
     const options = [
         {label:"all",value:"all"},
         {label:"Shahab3",value:"Shahab3"},
@@ -45,6 +59,7 @@ function ListLaunchers() {
                 <th>latitude</th>
                 <th>longitude</th>
                 <th>name</th>
+                <th>destroyed</th>
                 <th>enter</th>
             </tr>
       {launchers.filter((item1)=>{
@@ -73,6 +88,10 @@ function ListLaunchers() {
                 <td>{item.latitude}</td>
                 <td>{item.longitude}</td>
                 <td>{item.name}</td>
+                <td>{String(item.destroyed)} <button onClick={()=>{
+                  setBool(!bool)
+                  update(item._id)
+                }}>chanch</button></td>
                 <td className='but'><button id='ent'onClick={()=>{
                    negativ(`/${item._id}`)
                 }}>enter</button></td>

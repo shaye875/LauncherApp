@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import OneLauncher from "../companentas/oneLauncher";
 import Title from "../companentas/title";
+import Navbar from "../companentas/navbar";
 
 
 function LauncherDetails() {
@@ -9,7 +10,10 @@ function LauncherDetails() {
     const [launcher, setLauncher] = useState({})
     async function getLauncher() {
         try {
-            const res = await fetch(`http://localhost:3000/api/launchers/${id}`)
+            const res = await fetch(`http://localhost:3000/api/launchers/${id}`,{
+                method:"GET",
+                headers:{token:localStorage.getItem("token")}
+            })
             const data = await res.json()
             setLauncher(data)
         } catch(err) {
@@ -21,6 +25,7 @@ function LauncherDetails() {
     },[])
     return (
         <div>
+            <Navbar />
             <Title />
             <OneLauncher props={launcher} />
         </div>

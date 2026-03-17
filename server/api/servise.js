@@ -1,27 +1,28 @@
-import { insert, readAll, readById, removeById } from "./qweries.js"
-import { isInformation, isTypes, schema } from "./validation.js"
+import { insert, readAll, readById, removeById, updateOne } from "./qweries.js"
+import { isInformation , isTypes, schema} from "../utils/validation.js"
 
 
 export async function postLauncher(req, res) {
     const body = req.body
-    if (!isInformation(["city", "roketType", "latitude", "longitude", "name"], body)) {
+    if (!isInformation(["city", "roketType", "latitude", "longitude", "name","destroyed"], body)) {
         res.status(400)
-        res.json({ "false": "missing infprmation" })
+        return res.json({ "false": "missing infprmation" })
     }
     try{
         body.latitude = Number(body.latitude)
         body.longitude = Number(body.longitude)
+        body.destroyed = Boolean(body.destroyed)
     }catch{
         res.status(400)
-        res.json({ "false": "one or more types not good" })
+        return res.json({ "false": "one or more types not good" })
     }
-    if (!isTypes({ "city": "", "roketType": "", "latitude": 0, "longitude": 0, "name": "" }, body)) {
+    if (!isTypes({ "city": "", "roketType": "", "latitude": 0, "longitude": 0, "name": "" ,"destroyed":false}, body)) {
         res.status(400)
-        res.json({ "false": "one or more types not good" })
+        return res.json({ "false": "one or more types not good" })
     }
     if(!schema({4:new Set([body.roketType,"Shahab3", "Fetah110", "Radwan", "Kheibar"])})){
         res.status(400)
-        res.json({"false":"roketType must bu Shahab3, Fetah110, Radwan, Kheibar"})
+        return res.json({"false":"roketType must bu Shahab3, Fetah110, Radwan, Kheibar"})
     }
     const result = await insert(body)
     if (result.acknowledged) {
@@ -59,6 +60,20 @@ export async function deleteById(req, res) {
         res.status(200)
         res.json(result)
     } else {
+        res.status(404)
+        res.json({ "false": "not found" })
+    }
+}
+
+export async function chanch(req,res){
+    const {id} = req.params
+    const {bool} = req.body
+    const result = await updateOne(id,bool)
+    if (result.modifiedCount === 1) {
+        res.status(200)
+        res.json(result)
+    }
+    else {
         res.status(404)
         res.json({ "false": "not found" })
     }

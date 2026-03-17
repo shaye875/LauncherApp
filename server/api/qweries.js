@@ -1,8 +1,8 @@
 import { ObjectId } from "mongodb";
-import { getCollectin } from "../data/launching.js";
+import { getCollectinlauncer } from "../data/launching.js";
 
 
-const collection = await getCollectin()
+const collection = await getCollectinlauncer()
 
 export async function insert(launching) {
     try {
@@ -34,6 +34,15 @@ export async function readById(id) {
 export async function removeById(id){
     try {
         const result = await collection.deleteOne({_id:new ObjectId(id)})
+        return result
+    } catch (err) {
+        throw new Error(err)
+    }
+}
+
+export async function updateOne(id,bool) {
+    try {
+        const result = await collection.updateOne({ _id: new ObjectId(id) }, { $set: { destroyed:bool } })
         return result
     } catch (err) {
         throw new Error(err)
