@@ -4,18 +4,19 @@ import { isInformation, isTypes, schema } from "./validation.js"
 
 export async function postLauncher(req, res) {
     const body = req.body
-    if (!isInformation(["city", "roketType", "latitude", "longitude", "name"], body)) {
+    if (!isInformation(["city", "roketType", "latitude", "longitude", "name","destroyed"], body)) {
         res.status(400)
         res.json({ "false": "missing infprmation" })
     }
     try{
         body.latitude = Number(body.latitude)
         body.longitude = Number(body.longitude)
+        body.destroyed = Boolean(body.destroyed)
     }catch{
         res.status(400)
         res.json({ "false": "one or more types not good" })
     }
-    if (!isTypes({ "city": "", "roketType": "", "latitude": 0, "longitude": 0, "name": "" }, body)) {
+    if (!isTypes({ "city": "", "roketType": "", "latitude": 0, "longitude": 0, "name": "" ,"destroyed":false}, body)) {
         res.status(400)
         res.json({ "false": "one or more types not good" })
     }
