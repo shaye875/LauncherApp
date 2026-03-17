@@ -1,8 +1,8 @@
 import { ObjectId } from "mongodb";
-import { getCollectin } from "../data/launching.js";
+import { getCollectinlauncer } from "../data/launching.js";
 
 
-const collection = await getCollectin()
+const collection = await getCollectinlauncer()
 
 export async function insert(launching) {
     try {

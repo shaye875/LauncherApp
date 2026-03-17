@@ -1,5 +1,5 @@
 import { insert, readAll, readById, removeById } from "./qweries.js"
-import { isInformation, isTypes, schema } from "./validation.js"
+import { isInformation , isTypes, schema} from "../utils/validation.js"
 
 
 export async function postLauncher(req, res) {
