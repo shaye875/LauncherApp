@@ -1,4 +1,4 @@
-import { insert, readAll, readById, removeById } from "./qweries.js"
+import { insert, readAll, readById, removeById, updateOne } from "./qweries.js"
 import { isInformation , isTypes, schema} from "../utils/validation.js"
 
 
@@ -60,6 +60,20 @@ export async function deleteById(req, res) {
         res.status(200)
         res.json(result)
     } else {
+        res.status(404)
+        res.json({ "false": "not found" })
+    }
+}
+
+export async function chanch(req,res){
+    const {id} = req.params
+    const {bool} = req.body
+    const result = await updateOne(id,bool)
+    if (result.modifiedCount === 1) {
+        res.status(200)
+        res.json(result)
+    }
+    else {
         res.status(404)
         res.json({ "false": "not found" })
     }

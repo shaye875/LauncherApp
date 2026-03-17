@@ -39,3 +39,12 @@ export async function removeById(id){
         throw new Error(err)
     }
 }
+
+export async function updateOne(id,bool) {
+    try {
+        const result = await collection.updateOne({ _id: new ObjectId(id) }, { $set: { destroyed:bool } })
+        return result
+    } catch (err) {
+        throw new Error(err)
+    }
+}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import OneLauncher from "../companentas/oneLauncher";
 import Title from "../companentas/title";
+import Navbar from "../companentas/navbar";
 
 
 function LauncherDetails() {
@@ -24,6 +25,7 @@ function LauncherDetails() {
     },[])
     return (
         <div>
+            <Navbar />
             <Title />
             <OneLauncher props={launcher} />
         </div>

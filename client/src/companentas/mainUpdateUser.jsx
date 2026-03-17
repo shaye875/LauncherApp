@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { useParams } from 'react-router'
 
-function MainRegister() {
+function MainUpdateUser() {
+    const { id } = useParams()
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
@@ -9,14 +11,16 @@ function MainRegister() {
     const [boolAns, setBoolAns] = useState(false)
     async function register() {
         try {
-            const res = await fetch("http://localhost:3000/api/auth/register/create", {
-                method: "POST",
+            const res = await fetch("http://localhost:3000/api/auth/register/update", {
+                method: "PUT",
                 headers: { "Content-Type": "application/json", token: localStorage.getItem("token") },
                 body: JSON.stringify({
+                    _id: id,
                     username: username,
                     password: password,
                     email: email,
-                    userType: userType
+                    userType: userType,
+                    lastLogin: new Date()
                 })
             })
             const data = await res.json()
@@ -55,4 +59,4 @@ function MainRegister() {
     )
 }
 
-export default MainRegister
+export default MainUpdateUser

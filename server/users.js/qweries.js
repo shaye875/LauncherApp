@@ -5,23 +5,44 @@ import { getCollectinusers } from "../data/users.js";
 const collection = await getCollectinusers()
 
 export async function insert(user) {
-    const result = await collection.insertOne(user)
-    return result
+    try {
+        const result = await collection.insertOne(user)
+        return result
+    } catch (err) {
+        throw new Error(err)
+    }
 }
 
 export async function updateOne(user) {
-    const result = await collection.updateOne({ _id: new ObjectId(user._id) }, { $set: { username: user.username, password: user.password, email: user.email, userType: user.userType, lastLogin: user.lastLogin } })
-    return result
+    try {
+        const result = await collection.updateOne({ _id: new ObjectId(user._id) }, { $set: { username: user.username, password: user.password, email: user.email, userType: user.userType, lastLogin: user.lastLogin } })
+        return result
+    } catch (err) {
+        throw new Error(err)
+    }
 }
 
 export async function removeById(id) {
-    const result = await collection.deleteOne({ _id: new ObjectId(id) })
-    return result
+    try {
+        const result = await collection.deleteOne({ _id: new ObjectId(id) })
+        return result
+    } catch (err) {
+        throw new Error(err)
+    }
 }
 
 export async function getAll() {
     try {
         const result = await collection.find({}).toArray()
+        return result
+    } catch (err) {
+        throw new Error(err)
+    }
+}
+
+export async function getById(id) {
+    try {
+        const result = await collection.findOne({ _id: new ObjectId(id) })
         return result
     } catch (err) {
         throw new Error(err)

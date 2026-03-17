@@ -1,5 +1,5 @@
 import { isInformation, isTypes, schema } from "../utils/validation.js"
-import { getAll, insert, removeById, updateOne } from "./qweries.js"
+import { getAll, getById, insert, removeById, updateOne } from "./qweries.js"
 
 
 export async function create(req, res) {
@@ -75,4 +75,16 @@ export async function get(req,res){
     const arr = await getAll()
     res.status(200)
     res.json(arr)
+}
+
+export async function getOne(req,res){
+    const { id } = req.params
+    const result = await getById(id)
+    if (result.deletedCount === 1) {
+        res.status(200)
+        res.json(result)
+    } else {
+        res.status(404)
+        res.json({ "false": "not found" })
+    }
 }

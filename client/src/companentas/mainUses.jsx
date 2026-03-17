@@ -16,14 +16,19 @@ function MainUses() {
             throw new Error(err)
         }
     }
-
+    async function deleteOne(id) {
+        const res = await fetch(`http://localhost:3000/api/auth/register/delete/${id}`, {
+            method: "DELETE",
+            headers: { token: localStorage.getItem("token") }
+        })
+    }
     useEffect(() => {
         getUsers()
-    }, [])
+    }, [deleteOne])
     return (
         <div>
-            <button onClick={()=>{
-            navigate("/register")
+            <button id='new' onClick={() => {
+                navigate("/register")
             }}>new+</button>
             <table>
                 <tr>
@@ -33,6 +38,8 @@ function MainUses() {
                     <th>email</th>
                     <th>user type</th>
                     <th>last login</th>
+                    <th>update</th>
+                    <th>delete</th>
                 </tr>
                 {users.map((item) => {
                     return (
@@ -43,9 +50,12 @@ function MainUses() {
                             <td>{item.email}</td>
                             <td>{item.userType}</td>
                             <td>{item.lastLogin}</td>
-                            {/* <td className='but'><button id='ent'onClick={()=>{
-                   negativ(`/${item._id}`)
-                }}>enter</button></td> */}
+                            <td className='but'><button id='ent' onClick={()=>{
+                                navigate(`/user/${item._id}`)
+                            }}>update</button></td>
+                            <td className='but'><button id='ent' onClick={()=>{
+                                deleteOne(item._id)
+                            }}>delete</button></td>
                         </tr>
                     )
                 })}

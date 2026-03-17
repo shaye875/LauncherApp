@@ -31,18 +31,20 @@ function Login() {
                             headers: { token: localStorage.getItem("token") }
                         })
                         const user = await res.json()
+                            alert(`
+                                username: ${user.user.username}
+                                password: ${user.user.password}
+                                user type: ${user.user.userType}
+                                `)
                         while (localStorage.getItem("user") !== JSON.stringify(user)) {
                             localStorage.setItem("user", JSON.stringify(user))
                         }
-
                     } catch (err) {
                         throw new Error(err)
                     }
                 }
                 getUser()
                 const {user} = JSON.parse(localStorage.getItem("user"))
-                console.log(user);
-                
                 if (user.userType === "admin") {
                     navigate("/admin")
                 } else {
