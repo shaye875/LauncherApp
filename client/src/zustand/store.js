@@ -4,7 +4,10 @@ export const useLaunchers = create((set) =>({
     launchers:[],
     fetchLounchers:async () =>{
         try{
-          const res = await fetch("http://localhost:3000/api/launchers")
+          const res = await fetch("http://localhost:3000/api/launchers",{
+            method:"GET",
+            headers:{token:localStorage.getItem("token")}
+          })
           const arr = await res.json()
           set({launchers:arr})
         }catch(err){

@@ -6,12 +6,13 @@ function OneLauncher({ props }) {
     const [ans,setAns] = useState(false)
     async function deleteLauncher(){
        const res = await fetch(`http://localhost:3000/api/launchers/${props._id}`,{
-        method:"DELETE"
+        method:"DELETE",
+        headers:{token:localStorage.getItem("token")}
        })
        if(res.ok){
          setAns(true)
          setTimeout(()=>{
-          navigate("/")
+          navigate("/launchers")
          },2000)
        }
     }

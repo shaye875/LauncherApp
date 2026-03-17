@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLaunchers } from '../zustand/store'
 import Select from 'react-select'
-import { Navigate, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 
 function ListLaunchers() {
     const negativ = useNavigate()
